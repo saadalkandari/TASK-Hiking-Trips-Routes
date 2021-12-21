@@ -1,4 +1,3 @@
-## Hiking Trips - Routes
 
 ## Routes
 
@@ -61,18 +60,18 @@ function App() {
 </Routes>
 ```
 
-## Navbar links
+## Navbar Links
 
-1. In `Nav.js` import `Link` from `react-router-dom`.
+1. In `Nav.js` import `NavLink` from `react-router-dom`.
 
 ```javascript
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 ```
 
 2. Replace `<a>` tags with `<Link>` tags from react router dom and replace `href` with `to` so that `Home` shows you the `Home.js` component and `Trips` takes you to `TripsList` component.
 
 ```javascript
-<a class="nav-link py-3 px-0 px-lg-3 rounded" href="#">
+<a className="nav-link py-3 px-0 px-lg-3 rounded" href="#">
   Home
 </a>
 ```
@@ -80,15 +79,15 @@ import { Link } from 'react-router-dom';
 To:
 
 ```javascript
-<Link class="nav-link py-3 px-0 px-lg-3 rounded" to="/">
+<NavLink className="nav-link py-3 px-0 px-lg-3 rounded" to="/">
   Home
-</Link>
+</NavLink>
 ```
 
 And:
 
 ```javascript
-<a class="nav-link py-3 px-0 px-lg-3 rounded" href="#">
+<a className="nav-link py-3 px-0 px-lg-3 rounded" href="#">
   Trips
 </a>
 ```
@@ -96,21 +95,32 @@ And:
 To:
 
 ```javascript
-<Link class="nav-link py-3 px-0 px-lg-3 rounded" to="/trips">
+<NavLink className="nav-link py-3 px-0 px-lg-3 rounded" to="/trips">
   Trips
-</Link>
+</NavLink>
 ```
+
+3. Add a style that if the page is active the link becomes underlined.
+
+```javascript
+ <NavLink style={({ isActive }) => isActive ? { textDecoration: 'underline' } : { textDecoration: 'none' }} to="/"> Home </NavLink>
+```
+
+```javascript
+ <NavLink style={({ isActive }) => isActive ? { textDecoration: 'underline' } : { textDecoration: 'none' }} to="/trips"> Trips </NavLink>
+```
+
 
 ## Trip Details
 
-1. In `TripItem.js` import `<Link>` again and wrap your whole `tripItem` with it so it takes you to `tripDetail` component.
+1. In `TripItem.js` import `<Link>` again and wrap your whole `div` with it so it takes you to `tripDetail` component.
 
 ```javascript
 import { Link } from 'react-router-dom';
 
 function TripItem({ trip }) {
   return (
-      <div class="col-md-6 col-lg-4 mb-5">
+      <div className="col-md-6 col-lg-4 mb-5">
       <Link to="/details">
       ...
       </Link>
@@ -231,7 +241,11 @@ const trips = tripsData
 5. But what if the user didn't choose any difficulty? set the difficulty to an empty string.
 
 ```javascript
-if (!difficulty) {
-  difficulty = '';
-}
+function TripsList() {
+  const [query, setQuery] = useState('');
+  let difficulty = useParams().difficulty;
+  if (!difficulty) {
+    difficulty = '';
+  }
+  ...
 ```
